@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-string connectionString = "Server=(localdb)\\.;database=Modulo1Semana9;";
+string connectionString = "Server=NOTEAVELL;Database=Mes;Trusted_Connection=True;TrustServerCertificate=True;";
 builder.Services.AddDbContext<MesContext>(o => o.UseSqlServer(connectionString));
 
 var app = builder.Build();
