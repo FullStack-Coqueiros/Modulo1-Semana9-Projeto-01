@@ -4,7 +4,7 @@ Modulo1-Semana9-Projeto-01
 
 # VSCode Comands
 
-dotnet ef migrations add MigracaoInicial
+dotnet ef migrations add InitialCreate
 dotnet ef database update
 
 ## Instalar o EF
