@@ -13,8 +13,8 @@ namespace meu_primiro_projeto_ef.Model
     {
         [Key]
         [Column("CODIGO")]
-        public int Id { get; set; }    
-        
+        public int Id { get; set; }
+
         [MaxLength(100)]
         public string Nome { get; set; }
         public int Ano { get; set; }

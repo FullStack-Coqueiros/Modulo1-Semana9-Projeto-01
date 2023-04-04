@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 string connectionString = "Server=NOTEAVELL;Database=Mes;Trusted_Connection=True;TrustServerCertificate=True;";
+//Injeção de Depencencia do Context
 builder.Services.AddDbContext<MesContext>(o => o.UseSqlServer(connectionString));
 
 var app = builder.Build();
