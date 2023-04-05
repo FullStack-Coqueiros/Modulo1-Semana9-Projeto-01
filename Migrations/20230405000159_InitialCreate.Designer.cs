@@ -10,8 +10,8 @@ using meu_primiro_projeto_ef.Model;
 
 namespace meu_primiro_projeto_ef.Migrations
 {
-    [DbContext(typeof(MesContext))]
-    [Migration("20230331232357_InitialCreate")]
+    [DbContext(typeof(MeuBancoDadosContext))]
+    [Migration("20230405000159_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -29,7 +29,7 @@ namespace meu_primiro_projeto_ef.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("CODIGO");
+                        .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -44,6 +44,38 @@ namespace meu_primiro_projeto_ef.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mes");
+                });
+
+            modelBuilder.Entity("meu_primiro_projeto_ef.Model.SemanaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Dia")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MesId");
+
+                    b.ToTable("Semana");
+                });
+
+            modelBuilder.Entity("meu_primiro_projeto_ef.Model.SemanaModel", b =>
+                {
+                    b.HasOne("meu_primiro_projeto_ef.Model.MesModel", "Mes")
+                        .WithMany()
+                        .HasForeignKey("MesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mes");
                 });
 #pragma warning restore 612, 618
         }

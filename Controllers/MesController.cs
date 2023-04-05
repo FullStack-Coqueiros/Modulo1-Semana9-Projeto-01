@@ -9,19 +9,19 @@ namespace meu_primiro_projeto_ef.Controllers
     [ApiController]
     public class MesController : ControllerBase
     {
-        private readonly MesContext mesContext;
+        private readonly MeuBancoDadosContext meuBancoDadosContext;
 
         //Construtor com parametro (Injetado)
-        public MesController(MesContext mesContext)
+        public MesController(MeuBancoDadosContext meuBancoDadosContext)
         {
-            this.mesContext = mesContext;
+            this.meuBancoDadosContext = meuBancoDadosContext;
         }
 
         [HttpGet]
         public ActionResult<List<MesGetDTO>> Get()
         {
-            //Alocando memória dos dados no contexto GET
-            var listaMesModel = mesContext.Mes;
+            //Alocando memï¿½ria dos dados no contexto GET
+            var listaMesModel = meuBancoDadosContext.Mes;
             List<MesGetDTO> listaGetDto = new List<MesGetDTO>();
 
 
@@ -44,9 +44,25 @@ namespace meu_primiro_projeto_ef.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public ActionResult Get([FromRoute] int id)
+        public ActionResult<MesGetDTO> Get([FromRoute] int id)
         {
-            return Ok();
+            //Buscar o registro no banco de dados por >>>ID<<<
+            var mesModel = meuBancoDadosContext.Mes.Find(id);
+            //var mesModel = meuBancoDadosContext.Mes.Where(w => w.Id == id).FirstOrDefault();
+
+            if (mesModel == null)
+            {
+                return BadRequest("Dados nï¿½o encontrados no banco de dados");
+            }
+
+            //Modificar de mesModel para MesGetDTO
+            //dto ï¿½ minha mesGetDTO
+            MesGetDTO mesGetDTO = new MesGetDTO();
+            mesGetDTO.Id = mesModel.Id;
+            mesGetDTO.Ano = mesModel.Ano;
+            mesGetDTO.Mes = mesModel.Nome;
+
+            return Ok(mesGetDTO);
         }
 
         [HttpPost]
@@ -55,15 +71,15 @@ namespace meu_primiro_projeto_ef.Controllers
             //MesDto > MesModel
             MesModel model = new MesModel();
             
-            //Não preencher o id da model
+            //Nï¿½o preencher o id da model
             model.Nome = mesDto.DataHoraEvento.ToString("MMMM");
             model.Ano = mesDto.DataHoraEvento.Year;
 
             //Precisa add o mes model na propriedade DBSet<Mes>
-            mesContext.Mes.Add(model);
+            meuBancoDadosContext.Mes.Add(model);
 
-            //Salva a informação no banco de dados
-            mesContext.SaveChanges();
+            //Salva a informaï¿½ï¿½o no banco de dados
+            meuBancoDadosContext.SaveChanges();
 
             mesDto.Codigo = model.Id;
 
@@ -75,19 +91,19 @@ namespace meu_primiro_projeto_ef.Controllers
         {
 
             //Buscar por id no banco de dados
-            var mesModel = mesContext.Mes.Where(w => w.Id == mesUpdateDTO.Codigo).FirstOrDefault();
+            var mesModel = meuBancoDadosContext.Mes.Where(w => w.Id == mesUpdateDTO.Codigo).FirstOrDefault();
             
-            //Verificar se não é null
+            //Verificar se nï¿½o ï¿½ null
             if (mesModel != null)
             {
                 mesModel.Ano = mesUpdateDTO.Ano;
 
                 //Se for diferente de null atualizar variavel (atribuir valores)
-                //mesContext.Attach(mesModel);
-                //mesContext.Mes.Update(mesModel);
-                mesContext.Mes.Attach(mesModel);
+                //MeuBancoDadosContext.Attach(mesModel);
+                //MeuBancoDadosContext.Mes.Update(mesModel);
+                meuBancoDadosContext.Mes.Attach(mesModel);
 
-                mesContext.SaveChanges();
+                meuBancoDadosContext.SaveChanges();
 
                 return Ok(mesUpdateDTO);
             }
@@ -102,15 +118,15 @@ namespace meu_primiro_projeto_ef.Controllers
         public ActionResult Delete([FromRoute] int id)
         {
             //Verificar se existe registro no banco de dados
-            var mesModel = mesContext.Mes.Find(id);
+            var mesModel = meuBancoDadosContext.Mes.Find(id);
 
-            //Verificar se o registro está diferente de null
+            //Verificar se o registro estï¿½ diferente de null
             if (mesModel != null)
             {
                 //Deletar o regitro no banco de dados
-                //mesContext.Remove(mesModel);
-                mesContext.Mes.Remove(mesModel);
-                mesContext.SaveChanges();
+                //meuBancoDadosContext.Remove(mesModel);
+                meuBancoDadosContext.Mes.Remove(mesModel);
+                meuBancoDadosContext.SaveChanges();
 
                 return Ok();
             }

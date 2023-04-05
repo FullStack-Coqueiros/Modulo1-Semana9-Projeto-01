@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace meu_primiro_projeto_ef.Model
 {
-   public class MesContext : DbContext
+   public class MeuBancoDadosContext : DbContext
     {
-        public MesContext(DbContextOptions<MesContext> options) : base(options)
+        public MeuBancoDadosContext(DbContextOptions<MeuBancoDadosContext> options) : base(options)
         {
             //Todo: Configurar migration
             //ToDo: Executar os comandos do migratin
@@ -16,5 +16,6 @@ namespace meu_primiro_projeto_ef.Model
         }
 
         public DbSet<MesModel> Mes { get; set; }
+        public DbSet<SemanaModel> Semana { get; set; }
     }
 }

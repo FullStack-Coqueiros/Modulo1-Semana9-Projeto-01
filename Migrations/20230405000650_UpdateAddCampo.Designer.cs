@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using meu_primiro_projeto_ef.Model;
 
@@ -10,9 +11,11 @@ using meu_primiro_projeto_ef.Model;
 namespace meu_primiro_projeto_ef.Migrations
 {
     [DbContext(typeof(MeuBancoDadosContext))]
-    partial class MeuBancoDadosContextModelSnapshot : ModelSnapshot
+    [Migration("20230405000650_UpdateAddCampo")]
+    partial class UpdateAddCampo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

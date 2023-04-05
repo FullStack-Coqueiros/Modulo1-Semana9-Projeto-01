@@ -12,7 +12,7 @@ namespace meu_primiro_projeto_ef.Model
     public class MesModel
     {
         [Key]
-        [Column("CODIGO")]
+        [Column("Id")]
         public int Id { get; set; }
 
         [MaxLength(100)]
