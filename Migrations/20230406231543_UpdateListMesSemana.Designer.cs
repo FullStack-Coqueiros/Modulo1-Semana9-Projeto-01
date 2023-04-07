@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using meu_primiro_projeto_ef.Model;
 
@@ -10,9 +11,11 @@ using meu_primiro_projeto_ef.Model;
 namespace meu_primiro_projeto_ef.Migrations
 {
     [DbContext(typeof(MeuBancoDadosContext))]
-    partial class MeuBancoDadosContextModelSnapshot : ModelSnapshot
+    [Migration("20230406231543_UpdateListMesSemana")]
+    partial class UpdateListMesSemana
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,12 +73,17 @@ namespace meu_primiro_projeto_ef.Migrations
             modelBuilder.Entity("meu_primiro_projeto_ef.Model.SemanaModel", b =>
                 {
                     b.HasOne("meu_primiro_projeto_ef.Model.MesModel", "Mes")
-                        .WithMany()
+                        .WithMany("SemanaModels")
                         .HasForeignKey("MesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Mes");
+                });
+
+            modelBuilder.Entity("meu_primiro_projeto_ef.Model.MesModel", b =>
+                {
+                    b.Navigation("SemanaModels");
                 });
 #pragma warning restore 612, 618
         }

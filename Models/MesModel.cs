@@ -18,5 +18,7 @@ namespace meu_primiro_projeto_ef.Model
         [MaxLength(100)]
         public string Nome { get; set; }
         public int Ano { get; set; }
+
+        public ICollection<SemanaModel> SemanaModels { get; set; }
     }
 }
