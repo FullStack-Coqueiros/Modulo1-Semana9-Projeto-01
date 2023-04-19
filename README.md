@@ -10,6 +10,7 @@ Modulo1-Semana9-Projeto-01
 # VSCode Comands
 
 dotnet ef migrations add InitialCreate
+
 dotnet ef database update
 
 ## Instalar o EF
@@ -33,16 +34,11 @@ dotnet tool install --global dotnet-ef --version 5.*
 dotnet tool install --global dotnet-ef --version 3.*
 
 
-
-
 # VS 2022 Commands
 
 Add-Migration InitialCreate
 
 Update-Database
-
-
-
 
 # Como montar um ToDo Exemplo
 
