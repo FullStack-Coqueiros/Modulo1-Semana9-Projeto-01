@@ -1,6 +1,8 @@
 using meu_primiro_projeto_ef.DTO;
+using meu_primiro_projeto_ef.Enumerator;
 using meu_primiro_projeto_ef.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace meu_primiro_projeto_ef.Controllers
@@ -68,12 +70,36 @@ namespace meu_primiro_projeto_ef.Controllers
         [HttpPost]
         public ActionResult<MesCreateDTO> Post([FromBody] MesCreateDTO mesDto)
         {
+
+            /* Precisa fazer uma consulta na tabela Paciente (Simulção) */
+            if (mesDto.CPF == "12345678901")
+            {
+                return StatusCode(StatusCodes.Status409Conflict, "CPF Já cadastrado na base de dados");
+            }
+
+
             //MesDto > MesModel
             MesModel model = new MesModel();
-            
+
             //N�o preencher o id da model
             model.Nome = mesDto.DataHoraEvento.ToString("MMMM");
             model.Ano = mesDto.DataHoraEvento.Year;
+            model.StatusAtendimento = (int)mesDto.StatusAtendimento;
+            /*
+                var listaString = ["Item Um", "Item Dois" , "Item Tres"]
+                var exemplo=  string.Join("|", listaString);
+                "Item Um|Item Dois|Item Tres"
+             */
+
+            if (mesDto.Alergias != null)
+            {
+                //foreach (var alergiaItem in mesDto.Alergias)
+                //{
+                //    model.Alergias = model.Alergias + " | " + alergiaItem;
+                //}
+
+                model.Alergias = string.Join("|", mesDto.Alergias);
+            }
 
             //Precisa add o mes model na propriedade DBSet<Mes>
             meuBancoDadosContext.Mes.Add(model);
@@ -83,7 +109,7 @@ namespace meu_primiro_projeto_ef.Controllers
 
             mesDto.Codigo = model.Id;
 
-            return Ok(mesDto);
+            return StatusCode(201, mesDto);
         }
 
         [HttpPut]
@@ -92,7 +118,7 @@ namespace meu_primiro_projeto_ef.Controllers
 
             //Buscar por id no banco de dados
             var mesModel = meuBancoDadosContext.Mes.Where(w => w.Id == mesUpdateDTO.Codigo).FirstOrDefault();
-            
+
             //Verificar se n�o � null
             if (mesModel != null)
             {

@@ -30,6 +30,9 @@ namespace meu_primiro_projeto_ef.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Alergias")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Ano")
                         .HasColumnType("int");
 
@@ -38,9 +41,28 @@ namespace meu_primiro_projeto_ef.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("StatusAtendimento")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Mes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ano = 1234,
+                            Nome = "Teste Um",
+                            StatusAtendimento = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ano = 2023,
+                            Nome = "Teste Dois",
+                            StatusAtendimento = 3
+                        });
                 });
 
             modelBuilder.Entity("meu_primiro_projeto_ef.Model.SemanaModel", b =>

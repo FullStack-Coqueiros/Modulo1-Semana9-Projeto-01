@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace meu_primiro_projeto_ef.Migrations
 {
     /// <inheritdoc />
@@ -17,7 +19,9 @@ namespace meu_primiro_projeto_ef.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Ano = table.Column<int>(type: "int", nullable: false)
+                    Ano = table.Column<int>(type: "int", nullable: false),
+                    StatusAtendimento = table.Column<int>(type: "int", nullable: false),
+                    Alergias = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,6 +35,7 @@ namespace meu_primiro_projeto_ef.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Dia = table.Column<int>(type: "int", nullable: false),
+                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -42,6 +47,15 @@ namespace meu_primiro_projeto_ef.Migrations
                         principalTable: "Mes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Mes",
+                columns: new[] { "Id", "Alergias", "Ano", "Nome", "StatusAtendimento" },
+                values: new object[,]
+                {
+                    { 1, null, 1234, "Teste Um", 1 },
+                    { 2, null, 2023, "Teste Dois", 3 }
                 });
 
             migrationBuilder.CreateIndex(

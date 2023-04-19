@@ -42,3 +42,19 @@ Add-Migration InitialCreate
 Update-Database
 
 
+
+
+# Como montar um ToDo Exemplo
+
+ToDo
+- Criar Método Get do PacienteController - FEITO
+- Criar DTO para Paciente no método Get - FEITO
+- Retornar a PacienteGetDto no método GET - FEITO
+- Montar meu Objeto PacienteGetDto e devolver no return Ok() - FEITO
+
+
+ToDo Construtor com parametro
+- Criar o Contrutor da Controller - Feito
+- Adicionar o parametro do meu contexto - Feito
+- Criar uma variavel chamada nome do seu contexto na classe controller - Feito
+- Preciso passar o parametro do contrutor para minha variavel - Feito

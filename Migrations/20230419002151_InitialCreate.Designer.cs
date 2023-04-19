@@ -11,7 +11,7 @@ using meu_primiro_projeto_ef.Model;
 namespace meu_primiro_projeto_ef.Migrations
 {
     [DbContext(typeof(MeuBancoDadosContext))]
-    [Migration("20230405000159_InitialCreate")]
+    [Migration("20230419002151_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,6 +33,9 @@ namespace meu_primiro_projeto_ef.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Alergias")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Ano")
                         .HasColumnType("int");
 
@@ -41,9 +44,28 @@ namespace meu_primiro_projeto_ef.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("StatusAtendimento")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Mes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ano = 1234,
+                            Nome = "Teste Um",
+                            StatusAtendimento = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ano = 2023,
+                            Nome = "Teste Dois",
+                            StatusAtendimento = 3
+                        });
                 });
 
             modelBuilder.Entity("meu_primiro_projeto_ef.Model.SemanaModel", b =>
@@ -60,6 +82,9 @@ namespace meu_primiro_projeto_ef.Migrations
                     b.Property<int>("MesId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Observacao")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MesId");
@@ -70,12 +95,17 @@ namespace meu_primiro_projeto_ef.Migrations
             modelBuilder.Entity("meu_primiro_projeto_ef.Model.SemanaModel", b =>
                 {
                     b.HasOne("meu_primiro_projeto_ef.Model.MesModel", "Mes")
-                        .WithMany()
+                        .WithMany("SemanaModels")
                         .HasForeignKey("MesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Mes");
+                });
+
+            modelBuilder.Entity("meu_primiro_projeto_ef.Model.MesModel", b =>
+                {
+                    b.Navigation("SemanaModels");
                 });
 #pragma warning restore 612, 618
         }
